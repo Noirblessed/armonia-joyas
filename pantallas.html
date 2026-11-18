@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Armonía Joyas · Pantallas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: recorrido de compra en 6 pasos; cada paso muestra computadora y teléfono lado a lado. */
+:root{--bg:#FBFAF8;--fg:#1F1A17;--gris:#6E6762;--linea:#E4DFD8;--card:#F3F0EB;--oro:#9A7A48;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color-scheme:light}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:17px;line-height:1.47;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+h1,h2,p{margin:0}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto}
+header{padding-block:56px 28px;display:grid;gap:14px;justify-items:center;text-align:center}
+.logo{width:64px;aspect-ratio:395/400;background:var(--fg);-webkit-mask:url(img/logo-icon.png) center/contain no-repeat;mask:url(img/logo-icon.png) center/contain no-repeat}
+h1{font-size:clamp(36px,5.5vw,64px);font-weight:600;letter-spacing:-.04em;line-height:1.05}
+header p{color:var(--gris);max-width:52ch}
+.steps{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(251,250,248,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--linea);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)))}
+.steps ol{list-style:none;margin:0 auto;padding:12px 16px;display:flex;gap:6px;overflow-x:auto;max-width:1180px;scrollbar-width:none}
+.steps a{display:block;white-space:nowrap;font-size:14px;color:var(--gris);text-decoration:none;padding:7px 14px;border-radius:980px;border:1px solid transparent}
+.steps a:hover{color:var(--fg);border-color:var(--linea)}
+.step{padding-block:64px;border-bottom:1px solid var(--linea);scroll-margin-top:60px}
+.step:last-of-type{border-bottom:0}
+.head{display:grid;gap:6px;margin-bottom:24px}
+.num{font-size:14px;font-weight:500;color:var(--oro)}
+.head h2{font-size:clamp(28px,3.6vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.1}
+.head p{color:var(--gris);max-width:62ch}
+.pair{display:grid;grid-template-columns:minmax(0,2.4fr) minmax(0,1fr);gap:16px;align-items:stretch}
+figure{margin:0;background:var(--card);border-radius:20px;overflow:hidden;display:grid;grid-template-rows:1fr auto}
+figure img{width:100%;height:100%;object-fit:cover}
+figcaption{font-size:13px;color:var(--gris);padding:10px 16px;background:#fff;border-top:1px solid var(--linea)}
+footer{padding-block:32px 56px;color:var(--gris);font-size:13px;text-align:center}
+@media (max-width:760px){.pair{grid-template-columns:minmax(0,1fr)}.pair figure.cel{max-width:380px;justify-self:center;width:100%}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div class="logo" role="img" aria-label="Armonía Joyas"></div>
+    <h1>Así se ve comprar en Armonía</h1>
+    <p>El recorrido completo en computadora y teléfono: menú, producto, elegir medida, bolsa, pago y confirmación. Diseños generados con Magnific.</p>
+  </header>
+</div>
+
+<nav class="steps" aria-label="Pasos"><ol>
+  <li><a href="#paso-inicio">1 · Inicio y menú</a></li>
+  <li><a href="#paso-producto">2 · Producto</a></li>
+  <li><a href="#paso-elegir">3 · Elegir</a></li>
+  <li><a href="#paso-bolsa">4 · Bolsa</a></li>
+  <li><a href="#paso-pago">5 · Pago</a></li>
+  <li><a href="#paso-listo">6 · Confirmación</a></li>
+</ol></nav>
+
+<main class="wrap">
+  <section class="step" id="paso-inicio">
+    <div class="head"><span class="num">Paso 1</span><h2>Inicio y menú principal</h2><p>En computadora el menú vive en la barra de arriba. En el teléfono se abre a pantalla completa con letras grandes y accesos a cuenta y citas.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m1-inicio-pc.jpg" alt="Portada en computadora con hero Perla Serena" loading="lazy"><figcaption>Computadora · portada</figcaption></figure>
+      <figure class="cel"><img src="mock/m1-menu-cel.jpg" alt="Menú principal abierto en teléfono" loading="lazy"><figcaption>Teléfono · menú abierto</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="step" id="paso-producto">
+    <div class="head"><span class="num">Paso 2</span><h2>Viendo un producto</h2><p>Una foto grande, nombre, precio y una sola acción. Las miniaturas permiten ver la pieza puesta.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m2-producto-pc.jpg" alt="Ficha del Anillo Perla Serena en computadora" loading="lazy"><figcaption>Computadora · ficha de producto</figcaption></figure>
+      <figure class="cel"><img src="mock/m2-producto-cel.jpg" alt="Ficha del Anillo Perla Serena en teléfono" loading="lazy"><figcaption>Teléfono · ficha de producto</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="step" id="paso-elegir">
+    <div class="head"><span class="num">Paso 3</span><h2>Eligiendo metal y medida</h2><p>Fondo blanco y opciones en cajas simples: el metal en una lista y la medida en una fila. La opción elegida se marca con un borde negro, sin adornos. El precio y el botón de agregar quedan siempre a la vista.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m3-elegir-pc.jpg" alt="Selección de metal, medida y grabado en computadora" loading="lazy"><figcaption>Computadora · elegir opciones</figcaption></figure>
+      <figure class="cel"><img src="mock/m3-elegir-cel.jpg" alt="Selección de metal y medida en teléfono" loading="lazy"><figcaption>Teléfono · elegir opciones</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="step" id="paso-bolsa">
+    <div class="head"><span class="num">Paso 4</span><h2>En la bolsa</h2><p>El total va arriba en una frase y el botón de pagar justo debajo. Luego las piezas en filas limpias con cantidad, precio y la opción de eliminar.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m4-bolsa-pc.jpg" alt="Bolsa de compras en computadora con dos piezas" loading="lazy"><figcaption>Computadora · bolsa</figcaption></figure>
+      <figure class="cel"><img src="mock/m4-bolsa-cel.jpg" alt="Bolsa de compras en teléfono" loading="lazy"><figcaption>Teléfono · bolsa</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="step" id="paso-pago">
+    <div class="head"><span class="num">Paso 5</span><h2>Haciendo la compra</h2><p>Tres pasos: envío, pago y revisar. Tarjeta, Mercado Pago u OXXO.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m5-pago-pc.jpg" alt="Pago con datos de envío y método de pago en computadora" loading="lazy"><figcaption>Computadora · envío y pago</figcaption></figure>
+      <figure class="cel"><img src="mock/m5-pago-cel.jpg" alt="Método de pago en teléfono" loading="lazy"><figcaption>Teléfono · método de pago</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="step" id="paso-listo">
+    <div class="head"><span class="num">Paso 6</span><h2>Compra confirmada</h2><p>Página de gracias con número de pedido y fecha de entrega. En el teléfono llega además la notificación.</p></div>
+    <div class="pair">
+      <figure><img src="mock/m6-confirmacion-pc.jpg" alt="Página de compra confirmada en computadora" loading="lazy"><figcaption>Computadora · gracias por tu compra</figcaption></figure>
+      <figure class="cel"><img src="mock/m6-notificacion-cel.jpg" alt="Notificación de compra confirmada en la pantalla bloqueada del teléfono" loading="lazy"><figcaption>Teléfono · notificación</figcaption></figure>
+    </div>
+  </section>
+</main>
+<footer>Armonía Joyas · Prototipo. Nombres, precios y datos de ejemplo.</footer>
+
+</body>
+</html>

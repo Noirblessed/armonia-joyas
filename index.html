@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
+<title>Armonía Joyas · Seda</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+/* Layout: portada estilo tienda de producto. Intro con el logo → hero → repisas deslizables por categoría con "Ver todos" → catálogo filtrable → frase de marca → perforaciones con agenda → ubicación y contacto. Una sola apariencia clara a propósito. */
+:root{
+  --perla:#F3F0EB;
+  --blanco:#FFFFFF;
+  --tinta:#1F1A17;
+  --gris:#6E6762;
+  --oro:#9A7A48;
+  --linea:#E4DFD8;
+  --suave:#F6F4F1;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --intro:2.3s;
+  --side:max(16px,env(safe-area-inset-left,0px));
+  --sideR:max(16px,env(safe-area-inset-right,0px));
+  --shelf:max(var(--side),calc((100% - 1024px)/2));
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--blanco);color:var(--tinta);font-family:var(--sans);font-size:17px;line-height:1.47;letter-spacing:-.011em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:rgba(251,250,248,.9)}
+h1,h2,h3,p{margin:0}
+h1,h2{text-wrap:balance}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit}
+:focus-visible{outline:2px solid #2B6CB0;outline-offset:3px;border-radius:6px}
+.gutter{padding-left:var(--side);padding-right:var(--sideR)}
+.wrap{max-width:1024px;margin:0 auto}
+
+/* ---------- Intro con logo ---------- */
+.intro{position:fixed;inset:0;z-index:100;background:var(--perla);display:grid;place-items:center;animation:introOut .7s var(--intro) cubic-bezier(.4,0,.2,1) forwards;cursor:pointer}
+.intro-in{display:grid;justify-items:center;gap:22px}
+.mark{background:var(--tinta);-webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+.i-icon{--m:url(img/logo-icon.png);width:92px;aspect-ratio:395/400;animation:draw 1.1s .15s cubic-bezier(.6,0,.2,1) both}
+.i-word{--m:url(img/logo-word.png);width:min(240px,60vw);aspect-ratio:900/372;animation:word .9s 1s cubic-bezier(.2,.7,.2,1) both}
+.i-line{height:1px;width:120px;background:var(--oro);transform-origin:center;animation:line .8s 1.35s cubic-bezier(.2,.7,.2,1) both}
+@keyframes draw{from{clip-path:inset(100% 0 0 0);transform:translateY(10px)}to{clip-path:inset(0 0 0 0);transform:none}}
+@keyframes word{from{opacity:0;transform:translateY(10px);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+@keyframes line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes introOut{to{opacity:0;visibility:hidden}}
+.intro.skip{animation:introOut .35s forwards}
+
+/* ---------- Navegación ---------- */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:rgba(251,250,248,.82);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06)}
+.nav-in{max-width:1024px;margin:0 auto;height:52px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:9px}
+.l-icon{--m:url(img/logo-icon.png);height:26px;aspect-ratio:395/400}
+.l-word{--m:url(img/logo-armonia.png);height:12px;aspect-ratio:700/137}
+.links{display:flex;gap:28px;font-size:12px;color:#3a3330;list-style:none;margin:0;padding:0}
+.links a{opacity:.85;transition:opacity .2s}
+.links a:hover{opacity:1}
+.icons{display:flex;gap:16px;align-items:center}
+.icon{background:none;border:0;padding:4px;cursor:pointer;color:var(--tinta);display:grid;place-items:center;position:relative}
+.icon svg{width:17px;height:17px}
+.badge{position:absolute;top:-3px;right:-5px;min-width:16px;height:16px;border-radius:8px;background:var(--tinta);color:#fff;font-size:10px;font-weight:600;display:grid;place-items:center;padding:0 4px}
+.menu-btn{display:none}
+.drawer{display:none}
+
+/* ---------- Botones ---------- */
+.btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.btn{font:400 17px/1.18 var(--sans);letter-spacing:-.022em;padding:11px 22px;border-radius:980px;border:1px solid transparent;cursor:pointer;display:inline-block;transition:background-color .25s,color .25s,border-color .25s}
+.btn-fill{background:var(--tinta);color:#fff}
+.btn-fill:hover{background:#3A322D}
+.btn-line{border-color:var(--tinta);color:var(--tinta);background:transparent}
+.btn-line:hover{background:var(--tinta);color:#fff}
+.btn-sm{font-size:14px;padding:8px 16px}
+.dark .btn-fill{background:#fff;color:#000}
+.dark .btn-fill:hover{background:#E8E3DC}
+.dark .btn-line{border-color:#fff;color:#fff}
+.dark .btn-line:hover{background:#fff;color:#000}
+.more{color:var(--tinta);font-size:17px;background:none;border:0;padding:0;cursor:pointer;letter-spacing:-.016em}
+.more::after{content:" ›"}
+.more:hover{text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- Hero ---------- */
+.hero{background:var(--perla);text-align:center;overflow:hidden}
+.hero-copy{padding-top:56px;display:grid;gap:10px;justify-items:center}
+.tag{font-size:17px;font-weight:500;color:var(--oro)}
+.hero h1{font-size:clamp(44px,7vw,80px);font-weight:600;letter-spacing:-.04em;line-height:1.05}
+.hero .sub{font-size:clamp(19px,2.2vw,26px);color:#3a3330;max-width:28ch;letter-spacing:-.02em}
+.hero .btns{margin-top:14px}
+.price{font-size:14px;color:var(--gris);margin-top:4px}
+.hero-img{max-width:1280px;margin:-2vw auto 0;aspect-ratio:2200/1244;width:100%}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes settle{from{opacity:0;transform:scale(1.045)}to{opacity:1;transform:none}}
+.hero .tag{animation:up .8s calc(var(--intro) + .05s) cubic-bezier(.2,.7,.2,1) both}
+.hero h1{animation:up .9s calc(var(--intro) + .12s) cubic-bezier(.2,.7,.2,1) both}
+.hero .sub{animation:up .9s calc(var(--intro) + .22s) cubic-bezier(.2,.7,.2,1) both}
+.hero .btns,.hero .price{animation:up .9s calc(var(--intro) + .32s) cubic-bezier(.2,.7,.2,1) both}
+.hero-img img{animation:settle 1.6s calc(var(--intro) + .15s) cubic-bezier(.2,.7,.2,1) both}
+
+/* ---------- Repisas por categoría ---------- */
+.shelf{padding-block:64px 8px}
+.shelf-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 24px;margin-bottom:22px}
+.shelf-head h2{font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.1}
+.shelf-head h2 span{color:var(--gris)}
+.track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:var(--shelf);padding-inline:var(--shelf);padding-block:4px 20px;scrollbar-width:none;overscroll-behavior-x:contain}
+.track::-webkit-scrollbar{display:none}
+.track::after{content:"";flex:0 0 1px}
+.card{flex:0 0 auto;width:min(290px,72vw);height:430px;border-radius:20px;background:var(--c);display:flex;flex-direction:column;overflow:hidden;scroll-snap-align:start;position:relative;color:var(--tinta);transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(31,26,23,.12)}
+.card.dark{color:#F5F1EA}
+.card .ph{flex:1;min-height:0;overflow:hidden}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ph img{transform:scale(1.04)}
+.card .info{padding:16px 20px 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.card .info b{display:block;font-size:17px;font-weight:600;letter-spacing:-.02em}
+.card .info span{font-size:14px;opacity:.7}
+.add{flex:0 0 auto;width:34px;height:34px;border-radius:50%;border:0;background:var(--tinta);color:#fff;font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center;transition:transform .2s,background .2s}
+.add:hover{transform:scale(1.08)}
+.card.dark .add{background:#fff;color:#000}
+.feature{width:min(600px,86vw);text-align:center}
+.feature .copy{padding:40px 24px 0;display:grid;gap:6px;justify-items:center}
+.feature h3{font-size:clamp(28px,3.2vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.08}
+.feature p{font-size:17px;opacity:.8}
+.feature .btns{margin-top:10px}
+.feature .ph{margin-top:-4%}
+.arrows{display:flex;justify-content:flex-end;gap:12px;padding-inline:var(--shelf)}
+.arrow{width:36px;height:36px;border-radius:50%;border:0;background:#EDEAE6;color:var(--tinta);cursor:pointer;display:grid;place-items:center;transition:background .2s,opacity .2s}
+.arrow:hover{background:#E1DDD7}
+.arrow:disabled{opacity:.35;cursor:default}
+.arrow svg{width:14px;height:14px}
+
+/* ---------- Catálogo ---------- */
+.catalog{padding-block:80px 72px;background:var(--suave);margin-top:56px}
+.cat-head{display:grid;gap:18px;margin-bottom:28px}
+.cat-head h2{font-size:clamp(32px,4vw,48px);font-weight:600;letter-spacing:-.04em;line-height:1.05}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font:400 14px var(--sans);padding:8px 16px;border-radius:980px;border:1px solid var(--linea);background:#fff;color:var(--tinta);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.chip:hover{border-color:var(--tinta)}
+.chip[aria-pressed="true"]{background:var(--tinta);color:#fff;border-color:var(--tinta)}
+.sort{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:14px;color:var(--gris)}
+.sort select{font:400 14px var(--sans);border:1px solid var(--linea);border-radius:980px;padding:7px 12px;background:#fff;color:var(--tinta)}
+.count{font-size:14px;color:var(--gris)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.grid .card{width:auto;height:360px}
+
+/* ---------- Frase de marca ---------- */
+.editorial{background:#DCCAB8;position:relative;overflow:hidden;max-width:1440px;margin:12px auto 0}
+.editorial img{width:100%;aspect-ratio:2200/1244;object-fit:cover}
+.editorial .copy{position:absolute;left:0;top:0;bottom:0;width:48%;display:grid;align-content:center;gap:14px;padding-left:max(24px,6vw);justify-items:start}
+.editorial h2{font-size:clamp(32px,4.4vw,60px);font-weight:600;letter-spacing:-.04em;line-height:1.04;max-width:10ch}
+.editorial p{font-size:clamp(16px,1.5vw,19px);color:#4a3f37;max-width:30ch}
+.editorial .btn{margin-top:6px}
+
+/* ---------- Detalles ---------- */
+.perks{padding-block:72px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}
+.perk{display:grid;gap:6px;align-content:start}
+.perk svg{width:28px;height:28px;stroke:var(--tinta);fill:none;stroke-width:1.3;margin-bottom:6px}
+.perk b{font-size:17px;font-weight:600;letter-spacing:-.02em}
+.perk span{font-size:14px;color:var(--gris);line-height:1.45}
+
+/* ---------- Perforaciones ---------- */
+.pierce{background:var(--perla);padding-block:88px}
+.pierce-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:start}
+.pierce-copy{display:grid;gap:14px;position:sticky;top:90px}
+.pierce-copy h2{font-size:clamp(34px,4.4vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1.04}
+.pierce-copy p{color:#4a3f37;max-width:36ch}
+.pierce-copy ul{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:8px;font-size:15px;color:#4a3f37}
+.pierce-copy li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--oro);margin-right:10px;vertical-align:2px}
+.book{background:#fff;border-radius:20px;padding:28px;display:grid;gap:22px;box-shadow:0 1px 0 rgba(0,0,0,.03)}
+.book fieldset{border:0;margin:0;padding:0;display:grid;gap:10px;min-width:0}
+.book legend{font-size:14px;font-weight:600;padding:0;margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{font:400 14px var(--sans);border:1px solid var(--linea);background:#fff;border-radius:12px;padding:10px 14px;cursor:pointer;text-align:left;color:var(--tinta);transition:border-color .2s,box-shadow .2s}
+.opt small{display:block;color:var(--gris);font-size:12px;margin-top:2px}
+.opt:hover{border-color:#b9b1a8}
+.opt[aria-pressed="true"]{border-color:var(--tinta);box-shadow:inset 0 0 0 1px var(--tinta)}
+.opt.day{text-align:center;min-width:64px}
+.opt.day b{display:block;font-size:17px;font-weight:600}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.fields label{display:grid;gap:6px;font-size:13px;color:var(--gris)}
+.fields input{font:400 16px var(--sans);border:1px solid var(--linea);border-radius:12px;padding:11px 14px;color:var(--tinta);background:#fff;width:100%}
+.fields input:focus{outline:none;border-color:var(--tinta)}
+.sum{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid var(--linea);padding-top:18px}
+.sum span{font-size:14px;color:var(--gris)}
+.ok{display:grid;gap:8px;justify-items:center;text-align:center;padding:24px 8px}
+.ok .tick{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--tinta);display:grid;place-items:center}
+.ok h3{font-size:24px;font-weight:600;letter-spacing:-.03em}
+.ok p{color:var(--gris);font-size:15px;max-width:34ch}
+
+/* ---------- Visítanos ---------- */
+.visit{padding-block:88px}
+.visit-head{display:grid;gap:8px;margin-bottom:28px}
+.visit-head h2{font-size:clamp(34px,4.4vw,56px);font-weight:600;letter-spacing:-.04em;line-height:1.04}
+.visit-in{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px}
+.map{border-radius:20px;overflow:hidden;background:#EFEBE5;position:relative;min-height:360px}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.pin{position:absolute;left:54%;top:46%;transform:translate(-50%,-100%);display:grid;justify-items:center;gap:6px}
+.pin .bubble{background:var(--tinta);border-radius:14px;padding:9px 12px;display:flex;align-items:center;gap:8px;color:#fff;font-size:13px;font-weight:500;white-space:nowrap;box-shadow:0 10px 24px rgba(31,26,23,.25)}
+.pin .bubble i{--m:url(img/logo-icon.png);width:18px;aspect-ratio:395/400;background:#fff}
+.pin .dot{width:12px;height:12px;border-radius:50%;background:var(--tinta);box-shadow:0 0 0 6px rgba(31,26,23,.15);animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(31,26,23,.3)}100%{box-shadow:0 0 0 16px rgba(31,26,23,0)}}
+.map .go{position:absolute;right:16px;bottom:16px}
+.info-card{background:var(--suave);border-radius:20px;padding:26px;display:grid;gap:18px;align-content:start}
+.row{display:grid;gap:4px;padding-bottom:16px;border-bottom:1px solid var(--linea)}
+.row:last-of-type{border-bottom:0;padding-bottom:0}
+.row small{font-size:12px;color:var(--gris);font-weight:500;letter-spacing:.02em}
+.row .v{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:17px;letter-spacing:-.02em}
+.copy-btn{font:500 12px var(--sans);border:1px solid var(--linea);background:#fff;border-radius:980px;padding:5px 11px;cursor:pointer;color:var(--tinta);flex:0 0 auto}
+.copy-btn:hover{border-color:var(--tinta)}
+.hours{display:grid;grid-template-columns:auto 1fr;gap:2px 16px;font-size:15px}
+.hours dt{color:var(--gris)}
+.hours dd{margin:0}
+.open{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#2F7D4F;font-weight:500}
+.open::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.example{font-size:12px;color:var(--gris)}
+
+/* ---------- Toast ---------- */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);opacity:0;background:rgba(31,26,23,.92);color:#fff;padding:12px 18px;border-radius:14px;font-size:14px;display:flex;align-items:center;gap:12px;z-index:50;transition:opacity .3s,transform .3s;pointer-events:none;backdrop-filter:blur(10px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast img{width:36px;height:36px;border-radius:8px;object-fit:cover}
+
+/* ---------- Pie ---------- */
+footer{background:var(--suave);color:var(--gris);font-size:12px;line-height:1.5;border-top:1px solid var(--linea)}
+.foot{padding-block:32px 40px;display:grid;gap:24px}
+.cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.cols b{display:block;color:var(--tinta);font-weight:600;margin-bottom:8px}
+.cols ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.cols a:hover,.cols button:hover{text-decoration:underline}
+.cols button{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer}
+.legal{border-top:1px solid var(--linea);padding-top:16px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between}
+
+/* ---------- Celular ---------- */
+@media (max-width:833px){
+  .links{display:none}
+  .menu-btn{display:grid}
+  .drawer{display:block;overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(.2,.7,.2,1);background:rgba(251,250,248,.97)}
+  .nav.open .drawer{max-height:480px}
+  .drawer ul{list-style:none;margin:0;padding:8px 0 24px;display:grid}
+  .drawer a{display:block;font-size:24px;font-weight:600;letter-spacing:-.03em;padding:8px 0}
+  .editorial .copy{position:static;width:auto;padding:44px 24px 12px;text-align:center;justify-items:center}
+  .editorial h2,.editorial p{max-width:none}
+  .editorial{display:flex;flex-direction:column}
+  .perks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .pierce-in,.visit-in{grid-template-columns:minmax(0,1fr)}
+  .pierce-copy{position:static}
+  .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .arrows{display:none}
+  .sort{margin-left:0}
+}
+@media (max-width:480px){
+  .hero-copy{padding-top:40px}
+  .hero-img{margin-top:8px;aspect-ratio:4/3}
+  .perks{grid-template-columns:minmax(0,1fr);padding-block:48px}
+  .btns{gap:10px}
+  .card{height:400px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .grid .card{height:280px;border-radius:16px}
+  .grid .card .info{padding:12px 12px 14px}
+  .grid .card .info b{font-size:15px}
+  .grid .add{width:30px;height:30px;font-size:18px}
+  .fields{grid-template-columns:minmax(0,1fr)}
+  .book{padding:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  :root{--intro:0s}
+  .intro{display:none}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro-in">
+    <div class="mark i-icon"></div>
+    <div class="mark i-word"></div>
+    <div class="i-line"></div>
+  </div>
+</div>
+
+<header class="nav" id="nav">
+  <div class="nav-in gutter">
+    <a class="logo" href="#inicio" aria-label="Armonía Joyas, inicio"><span class="mark l-icon"></span><span class="mark l-word"></span></a>
+    <ul class="links">
+      <li><a href="#anillos">Anillos</a></li>
+      <li><a href="#collares">Collares</a></li>
+      <li><a href="#aretes">Aretes</a></li>
+      <li><a href="#pulseras">Pulseras</a></li>
+      <li><a href="#perforaciones">Perforaciones</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <div class="icons">
+      <button class="icon" type="button" aria-label="Buscar" data-filter="todos"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="7" cy="7" r="5.2"/><path d="M11 11l3.6 3.6"/></svg></button>
+      <button class="icon" type="button" aria-label="Bolsa" id="bagBtn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2.8 5.2h10.4l-.8 9.3H3.6z"/><path d="M5.6 5.2V4a2.4 2.4 0 0 1 4.8 0v1.2"/></svg><span class="badge" id="badge" hidden>0</span></button>
+      <button class="icon menu-btn" type="button" id="menuBtn" aria-label="Menú" aria-expanded="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M2 5.5h12M2 10.5h12"/></svg></button>
+    </div>
+  </div>
+  <nav class="drawer gutter" aria-label="Menú del celular">
+    <ul>
+      <li><a href="#anillos">Anillos</a></li>
+      <li><a href="#collares">Collares</a></li>
+      <li><a href="#aretes">Aretes</a></li>
+      <li><a href="#pulseras">Pulseras</a></li>
+      <li><a href="#perforaciones">Perforaciones</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="inicio">
+  <section class="hero">
+    <div class="hero-copy gutter">
+      <span class="tag">Nuevo</span>
+      <h1>Perla Serena</h1>
+      <p class="sub">Oro de 14 k. Una perla natural. Nada más.</p>
+      <div class="btns">
+        <button class="btn btn-fill" type="button" data-add="anillo-perla">Comprar</button>
+        <a class="btn btn-line" href="#anillos">Ver anillos</a>
+      </div>
+      <p class="price">Desde $12,900 MXN</p>
+    </div>
+    <div class="hero-img"><img src="img/hero.jpg" alt="Anillo delgado de oro de 14 k con una perla blanca" width="2200" height="1244"></div>
+  </section>
+
+  <div id="shelves"></div>
+
+  <section class="editorial">
+    <div class="copy">
+      <h2>Dale armonía a tu esencia.</h2>
+      <p>Joyas ligeras que no te quitas. Para el trabajo, la cena y el resto de tu día.</p>
+      <button class="btn btn-fill" type="button" data-filter="todos">Ver todos los productos</button>
+    </div>
+    <img src="img/retrato.jpg" alt="Perfil de una mujer con arete pequeño de oro y cadena fina" loading="lazy">
+  </section>
+
+  <section class="catalog" id="catalogo">
+    <div class="wrap gutter">
+      <div class="cat-head">
+        <h2>Todas las joyas</h2>
+        <div class="filters" role="group" aria-label="Filtrar por categoría">
+          <button class="chip" type="button" data-cat="todos" aria-pressed="true">Todas</button>
+          <button class="chip" type="button" data-cat="anillos" aria-pressed="false">Anillos</button>
+          <button class="chip" type="button" data-cat="collares" aria-pressed="false">Collares</button>
+          <button class="chip" type="button" data-cat="aretes" aria-pressed="false">Aretes</button>
+          <button class="chip" type="button" data-cat="pulseras" aria-pressed="false">Pulseras</button>
+          <label class="sort" for="sortSel">Ordenar
+            <select id="sortSel">
+              <option value="dest">Destacados</option>
+              <option value="asc">Precio: menor a mayor</option>
+              <option value="desc">Precio: mayor a menor</option>
+            </select>
+          </label>
+        </div>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="perks wrap gutter" aria-label="Detalles de cada compra">
+    <div class="perk"><svg viewBox="0 0 28 28"><path d="M5 20l13-13 3 3L8 23H5z"/><path d="M16 9l3 3"/></svg><b>Grabado sin costo</b><span>Iniciales o una fecha, hecho en nuestro taller.</span></div>
+    <div class="perk"><svg viewBox="0 0 28 28"><rect x="4" y="11" width="20" height="13" rx="1.5"/><path d="M3 7h22v4H3zM14 7v17"/><path d="M14 7c-2-4-7-4-6-1s6 1 6 1c2-4 7-4 6-1s-6 1-6 1"/></svg><b>Lista para regalar</b><span>Cada pieza llega en su caja con tarjeta escrita a mano.</span></div>
+    <div class="perk"><svg viewBox="0 0 28 28"><rect x="3" y="8" width="15" height="11" rx="1"/><path d="M18 11h4l3 3.5V19h-7"/><circle cx="8" cy="20.5" r="2"/><circle cx="21" cy="20.5" r="2"/></svg><b>Envío asegurado</b><span>Gratis a todo México en compras desde $3,000.</span></div>
+    <div class="perk"><svg viewBox="0 0 28 28"><path d="M5 14a9 9 0 1 0 3-6.7"/><path d="M5 4v4.5h4.5"/></svg><b>Cambios en 30 días</b><span>Si la medida no queda, la cambiamos sin costo.</span></div>
+  </section>
+
+  <section class="pierce" id="perforaciones">
+    <div class="wrap gutter pierce-in">
+      <div class="pierce-copy">
+        <span class="tag">Perforaciones</span>
+        <h2>Tu próxima perforación, con calma.</h2>
+        <p>Perforamos con aguja, material estéril y joyería de oro 14 k hipoalergénica. Tú eliges la pieza, nosotras nos encargamos del resto.</p>
+        <ul>
+          <li>Sin pistola, solo aguja profesional</li>
+          <li>Pieza de oro 14 k incluida en el precio</li>
+          <li>Revisión gratis a las 6 semanas</li>
+        </ul>
+      </div>
+
+      <form class="book" id="book" novalidate>
+        <div id="bookForm" style="display:grid;gap:22px">
+          <fieldset><legend>Perforación</legend>
+            <div class="opts" id="svc">
+              <button class="opt" type="button" data-v="Lóbulo" data-p="650" aria-pressed="true">Lóbulo<small>$650</small></button>
+              <button class="opt" type="button" data-v="Segundo lóbulo" data-p="650" aria-pressed="false">Segundo lóbulo<small>$650</small></button>
+              <button class="opt" type="button" data-v="Hélix" data-p="850" aria-pressed="false">Hélix<small>$850</small></button>
+              <button class="opt" type="button" data-v="Tragus" data-p="900" aria-pressed="false">Tragus<small>$900</small></button>
+              <button class="opt" type="button" data-v="Conch" data-p="950" aria-pressed="false">Conch<small>$950</small></button>
+            </div>
+          </fieldset>
+          <fieldset><legend>Día</legend><div class="opts" id="days"></div></fieldset>
+          <fieldset><legend>Hora</legend>
+            <div class="opts" id="hours">
+              <button class="opt" type="button" data-v="11:00" aria-pressed="false">11:00</button>
+              <button class="opt" type="button" data-v="12:30" aria-pressed="true">12:30</button>
+              <button class="opt" type="button" data-v="14:00" aria-pressed="false">14:00</button>
+              <button class="opt" type="button" data-v="15:30" aria-pressed="false">15:30</button>
+              <button class="opt" type="button" data-v="17:00" aria-pressed="false">17:00</button>
+            </div>
+          </fieldset>
+          <div class="fields">
+            <label for="bkName">Nombre<input id="bkName" type="text" autocomplete="name" value="Mariana López"></label>
+            <label for="bkTel">WhatsApp<input id="bkTel" type="tel" autocomplete="tel" value="55 1234 5678"></label>
+          </div>
+          <div class="sum"><span id="sumTxt"></span><button class="btn btn-fill" type="submit">Agendar perforación</button></div>
+        </div>
+        <div class="ok" id="bookOk" hidden>
+          <div class="tick"><svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#1F1A17" stroke-width="1.6"><path d="M5 11.5l4 4 8-9"/></svg></div>
+          <h3>Listo, te esperamos.</h3>
+          <p id="okTxt"></p>
+          <button class="more" type="button" id="bookAgain">Cambiar la cita</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="visit wrap gutter" id="contacto">
+    <div class="visit-head">
+      <span class="tag">Visítanos</span>
+      <h2>Ven a probártelas.</h2>
+    </div>
+    <div class="visit-in">
+      <div class="map" role="img" aria-label="Mapa con la ubicación de la tienda">
+        <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="600" height="420" fill="#EFEBE5"/>
+          <path d="M0 300 C120 280 200 330 330 300 S520 250 600 270 L600 420 L0 420Z" fill="#E3EADF"/>
+          <circle cx="470" cy="110" r="48" fill="#E3EADF"/>
+          <g stroke="#FFFFFF" stroke-linecap="round" fill="none">
+            <path d="M-20 190 L620 150" stroke-width="18"/>
+            <path d="M330 -20 L300 440" stroke-width="14"/>
+            <path d="M-20 80 L620 40" stroke-width="8"/>
+            <path d="M-20 260 L620 230" stroke-width="8"/>
+            <path d="M120 -20 L90 440" stroke-width="8"/>
+            <path d="M520 -20 L500 440" stroke-width="8"/>
+            <path d="M210 -20 L190 440" stroke-width="6"/>
+            <path d="M410 -20 L395 440" stroke-width="6"/>
+            <path d="M-20 350 L620 330" stroke-width="6"/>
+          </g>
+          <text x="40" y="180" font-family="Inter,sans-serif" font-size="11" fill="#8B837A">Av. Unión</text>
+          <text x="338" y="400" font-family="Inter,sans-serif" font-size="11" fill="#8B837A" transform="rotate(-86 338 400)">Ojo de Almanceña</text>
+        </svg>
+        <div class="pin"><div class="bubble"><i class="mark"></i>Armonía Joyas</div><div class="dot"></div></div>
+        <a class="btn btn-fill btn-sm go" href="https://www.google.com/maps/search/?api=1&query=Av.%20Uni%C3%B3n%20y%20Ojo%20de%20Almance%C3%B1a" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+      <div class="info-card">
+        <div class="row"><small>DIRECCIÓN</small><div class="v"><span>Av. Unión esquina con<br>Ojo de Almanceña</span></div></div>
+        <div class="row"><small>TELÉFONO</small><div class="v"><span>627 226 1174</span><button class="copy-btn" type="button" data-copy="627 226 1174">Copiar</button></div></div>
+        <div class="row"><small>HORARIO</small>
+          <dl class="hours"><dt>Lunes</dt><dd>11:00 – 19:00</dd><dt>Martes</dt><dd>Cerrado</dd><dt>Miércoles a viernes</dt><dd>11:00 – 19:00</dd><dt>Sábado</dt><dd>11:00 – 18:00</dd><dt>Domingo</dt><dd>12:00 – 15:00</dd></dl>
+          <span class="open" id="openNow">Abierto ahora</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot wrap gutter">
+    <div class="cols">
+      <div><b>Comprar</b><ul><li><a href="#anillos">Anillos</a></li><li><a href="#collares">Collares</a></li><li><a href="#aretes">Aretes</a></li><li><a href="#pulseras">Pulseras</a></li><li><button type="button" data-filter="todos">Ver todo</button></li></ul></div>
+      <div><b>Servicios</b><ul><li><a href="#perforaciones">Perforaciones</a></li><li><a href="#perforaciones">Agendar cita</a></li><li><a href="#inicio">Grabado</a></li></ul></div>
+      <div><b>Ayuda</b><ul><li><a href="#inicio">Guía de medidas</a></li><li><a href="#inicio">Cuidado de joyas</a></li><li><a href="#inicio">Envíos y cambios</a></li></ul></div>
+      <div><b>Armonía</b><ul><li><a href="#inicio">Nosotros</a></li><li><a href="#contacto">Ubicación</a></li><li><a href="#contacto">Contacto</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 Armonía Joyas. Prototipo: nombres de piezas y precios de ejemplo.</span><span><a href="pantallas.html" style="text-decoration:underline">Ver recorrido de compra</a> · <a href="comercial.mp4" style="text-decoration:underline">Ver comercial</a></span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><img id="toastImg" src="img/anillo-perla.jpg" alt=""><span id="toastTxt">Agregado a tu bolsa</span></div>
+
+<script>
+(function(){
+  var P=[
+    {id:'collar',cat:'collares',n:'Collar Luz',p:6800,c:'#000000',d:1},
+    {id:'collar-perla',cat:'collares',n:'Collar Perla',p:7400,c:'#000000',d:1},
+    {id:'collar-corazon',cat:'collares',n:'Collar Corazón',p:5900,c:'#000000',d:1},
+    {id:'collar-inicial',cat:'collares',n:'Collar Inicial',p:6200,c:'#000000',d:1},
+    {id:'aretes',cat:'aretes',n:'Aretes Lazo',p:8400,c:'#DCC5B3'},
+    {id:'aretes-huggie',cat:'aretes',n:'Arracadas Mini',p:5600,c:'#E9D3C0'},
+    {id:'aretes-perla',cat:'aretes',n:'Broqueles Perla',p:4900,c:'#E7D4C4'},
+    {id:'aretes-barra',cat:'aretes',n:'Aretes Línea',p:6300,c:'#DFC6B2'},
+    {id:'anillo-perla',cat:'anillos',n:'Anillo Perla Serena',p:12900,c:'#F3F0EB'},
+    {id:'solitario',cat:'anillos',n:'Solitario Eterno',p:38000,c:'#FEFEFE',desde:1},
+    {id:'argolla',cat:'anillos',n:'Argolla Clásica',p:9800,c:'#FEFEFE'},
+    {id:'eternidad',cat:'anillos',n:'Anillo Eternidad',p:21500,c:'#FEFEFE'},
+    {id:'sello',cat:'anillos',n:'Anillo Sello',p:11200,c:'#FEFEFE'},
+    {id:'pulseras',cat:'pulseras',n:'Pulseras Trío',p:14600,c:'#CBC1B9'},
+    {id:'pulsera-perla',cat:'pulseras',n:'Pulsera Perla',p:4700,c:'#C7BDB6'},
+    {id:'pulsera-tenis',cat:'pulseras',n:'Pulsera Tenis',p:26900,c:'#D0C5BF'},
+    {id:'brazalete',cat:'pulseras',n:'Brazalete Abierto',p:10400,c:'#CCC3BC'}
+  ];
+  var S=[
+    {cat:'collares',t:'Collares',sub:'Para llevar cerca.',f:'collar',fh:'Collar Luz',fp:'Una medalla de oro que te acompaña siempre.',dark:1},
+    {cat:'aretes',t:'Aretes',sub:'Ligeros, todo el día.',f:'aretes',fh:'Aretes Lazo',fp:'Movimiento ligero, perla al centro.'},
+    {cat:'anillos',t:'Anillos',sub:'Del día a día al para siempre.',f:'solitario',fh:'Solitario Eterno',fp:'Para decir que sí. Diamante certificado.'},
+    {cat:'pulseras',t:'Pulseras',sub:'Úsalas juntas o por separado.',f:'pulseras',fh:'Pulseras Trío',fp:'Tres aros finos de oro 14 k.'}
+  ];
+  var byId={};P.forEach(function(x){byId[x.id]=x});
+  var money=function(n){return '$'+n.toLocaleString('es-MX')};
+  var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+  function card(x){
+    return '<article class="card'+(x.d?' dark':'')+'" style="--c:'+x.c+'"><div class="ph"><img src="img/'+x.id+'.jpg" alt="'+esc(x.n)+'" loading="lazy"></div>'+
+      '<div class="info"><div><b>'+esc(x.n)+'</b><span>'+(x.desde?'Desde ':'')+money(x.p)+'</span></div>'+
+      '<button class="add" type="button" data-add="'+x.id+'" aria-label="Agregar '+esc(x.n)+' a la bolsa">+</button></div></article>';
+  }
+  var arrowL='<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 2L4 7l5 5"/></svg>';
+  var arrowR='<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 2l5 5-5 5"/></svg>';
+  document.getElementById('shelves').innerHTML=S.map(function(s){
+    var f=byId[s.f];
+    var feat='<article class="card feature'+(s.dark?' dark':'')+'" style="--c:'+f.c+'"><div class="copy"><h3>'+s.fh+'</h3><p>'+s.fp+'</p>'+
+      '<div class="btns"><button class="btn btn-fill btn-sm" type="button" data-add="'+f.id+'">Comprar</button><button class="btn btn-line btn-sm" type="button" data-filter="'+s.cat+'">Ver todos</button></div></div>'+
+      '<div class="ph"><img src="img/'+f.id+'.jpg" alt="'+esc(f.n)+'" loading="lazy"></div></article>';
+    var rest=P.filter(function(x){return x.cat===s.cat&&x.id!==s.f}).map(card).join('');
+    return '<section class="shelf" id="'+s.cat+'"><div class="wrap gutter shelf-head"><h2>'+s.t+'. <span>'+s.sub+'</span></h2>'+
+      '<button class="more" type="button" data-filter="'+s.cat+'">Ver todos</button></div>'+
+      '<div class="track" tabindex="0" aria-label="'+s.t+'">'+feat+rest+'</div>'+
+      '<div class="arrows"><button class="arrow" type="button" data-dir="-1" aria-label="Anterior">'+arrowL+'</button><button class="arrow" type="button" data-dir="1" aria-label="Siguiente">'+arrowR+'</button></div></section>';
+  }).join('');
+
+  // Flechas de cada repisa
+  document.querySelectorAll('.shelf').forEach(function(sh){
+    var t=sh.querySelector('.track'),b=sh.querySelectorAll('.arrow');
+    function upd(){b[0].disabled=t.scrollLeft<8;b[1].disabled=t.scrollLeft+t.clientWidth>=t.scrollWidth-8}
+    b.forEach(function(x){x.addEventListener('click',function(){t.scrollBy({left:+x.dataset.dir*(t.clientWidth*.8),behavior:'smooth'})})});
+    t.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd);upd();
+  });
+
+  // Catálogo con filtro
+  var cat='todos',sort='dest',grid=document.getElementById('grid'),count=document.getElementById('count');
+  function render(){
+    var list=P.filter(function(x){return cat==='todos'||x.cat===cat});
+    if(sort==='asc')list=list.slice().sort(function(a,b){return a.p-b.p});
+    if(sort==='desc')list=list.slice().sort(function(a,b){return b.p-a.p});
+    grid.innerHTML=list.map(card).join('');
+    count.textContent=list.length+(list.length===1?' pieza':' piezas');
+    document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-pressed',c.dataset.cat===cat)});
+  }
+  document.querySelectorAll('.chip').forEach(function(c){c.addEventListener('click',function(){cat=c.dataset.cat;render()})});
+  document.getElementById('sortSel').addEventListener('change',function(e){sort=e.target.value;render()});
+  render();
+  document.addEventListener('click',function(e){
+    var f=e.target.closest('[data-filter]');
+    if(f){cat=f.dataset.filter;render();document.getElementById('catalogo').scrollIntoView({behavior:'smooth'});}
+  });
+
+  // Bolsa
+  var n=0,badge=document.getElementById('badge'),toast=document.getElementById('toast'),tt;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-add]');if(!a)return;
+    var x=byId[a.dataset.add];n++;badge.textContent=n;badge.hidden=false;
+    document.getElementById('toastImg').src='img/'+x.id+'.jpg';
+    document.getElementById('toastTxt').textContent=x.n+' se agregó a tu bolsa';
+    toast.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('show')},2200);
+  });
+
+  // Intro: clic para saltar
+  var intro=document.getElementById('intro');
+  intro.addEventListener('click',function(){intro.classList.add('skip');document.documentElement.style.setProperty('--intro','0s')});
+
+  // Menú celular
+  var nav=document.getElementById('nav'),mb=document.getElementById('menuBtn');
+  mb.addEventListener('click',function(){var o=nav.classList.toggle('open');mb.setAttribute('aria-expanded',o)});
+  nav.querySelectorAll('.drawer a').forEach(function(a){a.addEventListener('click',function(){nav.classList.remove('open');mb.setAttribute('aria-expanded','false')})});
+
+  // Agenda de perforaciones
+  var dn=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'],mn=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  var days=document.getElementById('days'),d=new Date(),out=[];
+  while(out.length<6){d.setDate(d.getDate()+1);if(d.getDay()!==0&&d.getDay()!==2)out.push(new Date(d))}
+  days.innerHTML=out.map(function(x,i){return '<button class="opt day" type="button" data-v="'+dn[x.getDay()].toLowerCase()+' '+x.getDate()+' de '+mn[x.getMonth()]+'" aria-pressed="'+(i===1)+'">'+dn[x.getDay()]+'<b>'+x.getDate()+'</b></button>'}).join('');
+  function pick(id){var g=document.getElementById(id);g.addEventListener('click',function(e){var o=e.target.closest('.opt');if(!o)return;g.querySelectorAll('.opt').forEach(function(x){x.setAttribute('aria-pressed',x===o)});sum()})}
+  function val(id){return document.querySelector('#'+id+' [aria-pressed="true"]')}
+  function sum(){var s=val('svc');document.getElementById('sumTxt').textContent=s.dataset.v+' · '+val('days').dataset.v+' · '+val('hours').dataset.v+' · '+money(+s.dataset.p)}
+  ['svc','days','hours'].forEach(pick);sum();
+  document.getElementById('book').addEventListener('submit',function(e){
+    e.preventDefault();var nm=document.getElementById('bkName').value.trim()||'Hola';
+    document.getElementById('okTxt').textContent=nm.split(' ')[0]+', tu cita de '+val('svc').dataset.v.toLowerCase()+' es el '+val('days').dataset.v+' a las '+val('hours').dataset.v+'. Te confirmamos por WhatsApp.';
+    document.getElementById('bookForm').hidden=true;document.getElementById('bookOk').hidden=false;
+  });
+  document.getElementById('bookAgain').addEventListener('click',function(){document.getElementById('bookForm').hidden=false;document.getElementById('bookOk').hidden=true});
+
+  // Copiar números
+  document.querySelectorAll('[data-copy]').forEach(function(b){b.addEventListener('click',function(){
+    var t=b.dataset.copy,done=function(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar'},1600)};
+    try{navigator.clipboard.writeText(t).then(done,function(){sel(b)})}catch(_){sel(b)}
+  })});
+  function sel(b){var r=document.createRange();r.selectNodeContents(b.previousElementSibling);var s=getSelection();s.removeAllRanges();s.addRange(r)}
+
+  // Abierto ahora
+  var now=new Date(),h=now.getHours()+now.getMinutes()/60,wd=now.getDay(),op=document.getElementById('openNow');
+  var isOpen=((wd===1||(wd>=3&&wd<=5))&&h>=11&&h<19)||(wd===6&&h>=11&&h<18)||(wd===0&&h>=12&&h<15);
+  if(!isOpen){op.textContent='Cerrado ahora';op.style.color='#9A4A3A'}
+})();
+</script>
+
+</body>
+</html>
